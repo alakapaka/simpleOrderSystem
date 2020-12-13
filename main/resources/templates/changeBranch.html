@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>החלפת סניף</title>
+</head>
+<body bgcolor="#4169e1">
+<table border="true" bgcolor="#f0f8ff" cellspacing="0.6rem" align="center" valign="true">
+    <thead>
+    <tr>
+        <th>סהכ</th>
+        <th>מחיר</th>
+        <th>מידה</th>
+        <th>כמות</th>
+        <th>מוצר</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <form method="post" action="updateOrder">
+        <td align="center">
+            <input type="hidden" th:value="${dispatch.id}" name="update">
+            <input type="hidden" th:value="${order.id}" name="orderId">
+            <input type="submit" value="עדכן"></td>
+        <th bgcolor="#6495ed">אבן גבירול</th>
+        <td align="center" bgcolor="#6495ed"><input type="checkbox" name="gab"
+                                                    th:checked="${order.dispatch.name == 'gab73'}"/>
+        </td>
+        <th bgcolor="#6495ed">ישעיהו</th>
+        <td align="center" bgcolor="#6495ed"><input type="checkbox" name="yis"
+                                                    th:checked="${order.dispatch.name == 'yis1'}"/>
+        <th bgcolor="#6495ed">איינשטין</th>
+        <td align="center" bgcolor="#6495ed"><input type="checkbox" name="eins"
+                                                    th:checked="${order.dispatch.name  == 'eins9'}"/>
+        <th bgcolor="#6495ed">בן יהודה</th>
+        <td align="center" bgcolor="#6495ed"><input type="checkbox" name="ben"
+                                                    th:checked="${order.dispatch.name  == 'ben32'}"/>
+
+    </form>
+    </tbody>
+</table>
+</body>
+</html>

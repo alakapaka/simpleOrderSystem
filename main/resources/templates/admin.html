@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>מערכת ניהול</title>
+</head>
+<body bgcolor="#4169e1" style="font-family: Tahoma, Geneva, sans-serif;">
+<table border="true" cellspacing="0.5rem" bgcolor="#f0f8ff" align="center" valign="true">
+
+    <thead>
+    <tr th:unless="${allOrders.empty}">
+        <th></th>
+        <th align="center"> סהכ הזמנות</th>
+        <th align="center"> בוצעו</th>
+        <th align="center"> פתוחות</th>
+        <th align="center"> סניף</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <form method="get" action="/mishlochim/exit">
+            <input type="submit" value="יציאה"/>
+
+        </form>
+    </tr>
+    <tr th:if="${allOrders.empty}">
+        <h1 align="center"> אין הזמנות פעילות כרגע </h1>
+    </tr>
+    <tr th:each="key : ${allOrders}" th:unless="${allOrders.empty}">
+        <td>
+            <form method="get" action="/mishlochim/seeActive">
+                <input type="hidden" th:value="admin" name="admin">
+                <input type="hidden" th:Value="${key.getKey().getName()}" name="branch"/>
+                <input type="submit" value="הצג הזמנות פעילות"/>
+            </form>
+        </td>
+        <td align="center"><span th:text="${key.getValue().get(2)}"> סהכ </span></td>
+        <td align="center"><span th:text="${key.getValue().get(1)}"> בוצעו </span></td>
+        <td align="center"><span th:text="${key.getValue().get(0)}"> פעילות </span></td>
+        <td align="center"><span th:text="${key.getKey().getDisplayName()  }"> פעילות </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

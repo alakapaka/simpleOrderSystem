@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>משלוחים פעילים</title>
+</head>
+<body bgcolor="#4169e1">
+<h3 th:text="${header1}" style="font-family: Tahoma, Geneva, sans-serif; text-align: center"></h3>
+<h3 th:text="${header2}" style="font-family: Tahoma, Geneva, sans-serif; text-align: center"></h3>
+<h3 th:text="${header3}" style="font-family: Tahoma, Geneva, sans-serif; text-align: center"></h3>
+<table border="true" bgcolor="#f0f8ff" cellspacing="0.6rem" align="center" valign="true"
+       style="font-family: Tahoma, Geneva, sans-serif; font-size: 14px; ">
+    <thead>
+    <tr>
+
+        <th>הערת הלקוח</th>
+        <th>תיאור מבצע</th>
+        <th>סה"כ מחיר לאחר הנחה</th>
+        <th>מחיר כולל</th>
+        <th>מחיר יחידה</th>
+        <th>כמות</th>
+        <th>ברקוד</th>
+        <th>מותג</th>
+        <th>שם המוצר</th>
+        <th>תמונה</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${order.empty}">
+        <td colspan="2"> empty</td>
+    </tr>
+    <tr th:each="line , itemStat: *{order}"
+        style="font-family: Tahoma, Geneva, sans-serif; font-size: 14px; text-align: center;">
+        <td><span th:text="${order[__${itemStat.index}__].get(9)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(8)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(7)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(6)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(5)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(4)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(3)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(2)}"></span></td>
+        <td><span th:text="${order[__${itemStat.index}__].get(1)}"></span></td>
+        <td><img th:src="${order[__${itemStat.index}__].get(0)}"></img></td>
+        <td><input type="checkbox"/></td>
+    </tr>
+    </tbody>
+</table>
+<table align="center" valign="true" cellspacing="0">
+
+    <tbody>
+
+    <thead align="center" style="font-family: Tahoma, Geneva, sans-serif; text-align: center; font-max-size: 5px">
+    <tr style="font-family: Tahoma, Geneva, sans-serif; text-align: center; font-size: 13px">
+        <th></th>
+        <th></th>
+        <th></th>
+        <th bgcolor="#6495ed">שילוח</th>
+        <th bgcolor="#6495ed">חיוב</th>
+        <th bgcolor="#6495ed">ליקוט</th>
+        <th></th>
+        <th width="20pixels" bgcolor="#6495ed" > אבן גבירול</th>
+        <th></th>
+        <th width="20pixels" bgcolor="#6495ed" style="margin-left: 4px; margin-right: 2px"> ישעיהו</th>
+        <th></th>
+        <th width="20pixels" bgcolor="#6495ed" style="margin-left: 4px; margin-right: 2px"> בן יהודה</th>
+        <th></th>
+        <th width="20pixels" bgcolor="#6495ed" style="margin-left: 4px; margin-right: 2px"> בארט</th>
+        <th></th>
+        <th width="20pixels" bgcolor="#6495ed" style="margin-left: 4px; margin-right: 2px"> בן ציון</th>
+        <th></th>
+        <th width="20pixels" bgcolor="#6495ed" style="margin-left: 4px; margin-right: 2px"> יהודה מכבי</th>
+    </tr>
+    </thead>
+    <tr th:each="stat : ${orderStat}">
+        <td align="center">
+            <form method="post" action="/mishlochim/delete">
+                <input type="hidden" th:Value="${stat.dispatch.name}" name="branch">
+                <input type="hidden" th:value="${stat.dispatch.id}" name="update">
+                <input type="hidden" th:value="${stat.id}" name="orderId">
+                <input type="submit" value="מחיקה">
+            </form>
+        </td>
+
+        <td align="center" valign="true">
+            <form method="post" action="/mishlochim/seeActive">
+                <input type="hidden" th:Value="${stat.dispatch.name}" name="branch">
+                <input type="hidden" th:Value="${stat.dispatch.password}" name="pwd">
+                <input type="submit" value="חזרה ללא עדכון">
+            </form>
+
+        </td>
+        <form method="post" action="/mishlochim/adminUpdate">
+            <td align="center">
+                <input type="hidden" th:Value="${stat.dispatch.name}" name="branch">
+                <input type="hidden" th:value="${stat.dispatch.id}" name="update">
+                <input type="hidden" th:value="${stat.id}" name="orderId">
+                <input type="submit" value="עדכן"></td>
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="snt" th:checked="${stat.sentStatus}"/>
+            </td>
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="crg" th:checked="${stat.chargeStatus}"/>
+            </td>
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="pup" th:checked="${stat.pickUpStatus}"/>
+            </td>
+            <td></td>
+
+
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="gab"
+                                                        th:checked="${stat.dispatch.name == 'gab73'}"/>
+            </td>
+            <td></td>
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="yis"
+                                                        th:checked="${stat.dispatch.name == 'yis1'}"/>
+            <td></td>
+
+            <!--<th bgcolor="#6495ed">איינשטין</th>-->
+                <!--<td align="center" bgcolor="#6495ed"><input type="checkbox" name="eins"-->
+                <!--th:checked="${stat.dispatch.name == 'eins9'}"/>-->
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="benY"
+                                                        th:checked="${stat.dispatch.name == 'ben32'}"/>
+            <td></td>
+
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="bart"
+                                                        th:checked="${stat.dispatch.name == 'bart6'}"/>
+            <td></td>
+
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="benZ"
+                                                        th:checked="${stat.dispatch.name == 'benZ3'}"/>
+            <td></td>
+
+            <td align="center" bgcolor="#6495ed"><input type="checkbox" name="mac"
+                                                        th:checked="${stat.dispatch.name == 'mac72'}"/>
+
+
+        </form>
+    </tr>
+
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

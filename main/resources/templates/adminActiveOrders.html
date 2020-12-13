@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+</head>
+<body bgcolor="#4169e1" style="font-family: Tahoma, Geneva, sans-serif;">
+<h1 th:text="${activeBranch}" align="center"></h1>
+<h3 th:text="${noSuccess}" align="center"></h3>
+<h3 th:text="${success}" align="center"></h3>
+<table border="true" cellspacing="0.5rem" bgcolor="#f0f8ff" align="center" valign="true">
+
+    <thead>
+    <tr th:unless="${orders.empty}" style="font-family: Tahoma, Geneva, sans-serif; font-size: 14px; ">
+        <th></th>
+        <th align="center"> הערות לקוח</th>
+        <th align="center">שעת המשלוח</th>
+        <th align="center"> שילוח</th>
+        <th align="center"> חיוב</th>
+        <th align="center"> ליקוט</th>
+        <th align="center"> כתובת</th>
+        <th align="center"> מס הזמנה</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <form method="get" action="exit">
+            <input type="submit" value="יציאה" />
+        </form>
+    </tr>
+    <tr >
+        <form method="get" action="goback">
+            <input type="submit" value="חזור"/>
+        </form>
+    </tr>
+    <tr th:if="${orders.empty}">
+        <h1 align="center"> אין הזמנות פעילות כרגע </h1>
+    </tr>
+    <tr th:each="order : ${orders}" style="font-family: Tahoma, Geneva, sans-serif; font-size: 14px; ">
+        <td>
+            <form method="post" action="/mishlochim/adminSeeOrder">
+                <input type="hidden" th:value="${order.id}" name="order"/>
+                <input type="hidden"  th:value= "true" name="admin"/>
+                <input type="submit" value="הצג הזמנה"/>
+            </form>
+
+        </td>
+        <td align="center"><span th:text="${order.notes}"> הערות </span></td>
+        <td align="center"><span th:text="${order.orderTime}"> זמן משלוח </span></td>
+        <td align="center"><input type="checkbox" disabled="true" th:checked="${order.sentStatus}"/></td>
+        <td align="center"><input type="checkbox" disabled="true" th:checked="${order.chargeStatus}"/></td>
+        <td align="center"><input disabled="true" type="checkbox" th:checked="${order.pickUpStatus}"/></td>
+        <td align="center"><span th:text="${order.customer.address}"> כתובת </span></td>
+        <td align="center"><span th:text="${order.salId}"> מס הזמנה </span></td>
+    </tr>
+
+    </tbody>
+</table>
+
+</body>
+</html>
